@@ -2,10 +2,10 @@
     include('../incs/config.php');
     $stmt = $db->prepare("SELECT a.id, a.tarefa, b.nome AS nomeacao, c.nome AS nomeentidade,
      a.concluido
-                            FROM tarefas AS a
-                            INNER JOIN acoes AS b
+                            FROM todo.tarefas AS a
+                            INNER JOIN todo.acoes AS b
                             ON a.id_acao = b.id
-                            INNER JOIN entidades as c
+                            INNER JOIN todo.entidades as c
                             ON a.id_entidade = c.id");
     $stmt->execute();
     $tarefas = $stmt->fetchAll();
@@ -33,7 +33,7 @@
                     </div>
                     <div class="card-body">
                         <a href="tarefas_add.php" class="btn btn-primary btn-lg">Criar nova</a>
-                        <h5 class="card-title">Lista das tarefas</h5>
+                        <h5 class="card-title">Lista das Tarefas</h5>
                         <table class="table table-sm">
                         <thead>
                             <tr>

@@ -19,7 +19,7 @@
       
 
         //envia para a base de dados
-        $stmt =$db->prepare("UPDATE tarefas SET concluido = 1 WHERE id= :id");
+        $stmt =$db->prepare("UPDATE todo.tarefas SET concluido = 1 WHERE id= :id");
         $stmt->bindParam(':id',$_GET['id']);
         $stmt->execute();
     ?>

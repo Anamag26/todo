@@ -1,6 +1,6 @@
 <?php
 
-$versao = "0.0";
+$versao = "0.2";
 $autor = "Ana Margarida";
 
 $username = "root";

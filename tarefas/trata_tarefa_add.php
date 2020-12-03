@@ -30,8 +30,8 @@
         $hora = $_POST['hora'];
 
         //envia para a base de dados
-        $stmt =$db->prepare("INSERT INTO tarefas (tarefa, descricao, id_acao, id_entidade,
-         data, hora) VALUES (:tarefa, :descricao, :acao,:entidade :data, :hora)");
+        $stmt =$db->prepare("INSERT INTO todo.tarefas (tarefa, descricao, id_acao, id_entidade,
+         data, hora) VALUES (:tarefa, :descricao, :acao, :entidade, :data, :hora)");
         $stmt->bindParam(':tarefa',$tarefa);
         $stmt->bindParam(':descricao',$descricao); 
         $stmt->bindParam(':acao',$acao);

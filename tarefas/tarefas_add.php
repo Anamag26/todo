@@ -82,7 +82,7 @@
                           <input type="submit" value="Confirmar" class="btn btn-primary">
                           </form>
                           
-                    </div>
+                      </div>
                 </div>
             </div>
         </div>

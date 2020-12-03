@@ -2,7 +2,6 @@
     include('../incs/config.php');
 
     $id = $_GET['id'];
-    $created_at = $_GET['nome'];
     $stmt = $db->prepare("SELECT * FROM todo.tarefas WHERE id = :id");
     $stmt->bindParam(':id', $id);
     $stmt->execute();
@@ -31,22 +30,66 @@
                     </div>
                     <div class="card-body">
                         <form action="trata_tarefa_edit.php" method="post">
-                        <input type="hidden" name="id" value="<?php echo $id; ?>">
-                         <div class="form-group">
-                         <label for="tarefa">Tarefa</label>
-                           <input type="text" name="tarefa" id="tarefa" class="form-control"  maxlength="20" required>
+                          <div class="form-group">
+                            <label for="tarefa">Tarefa</label>
+                            <input type="text" name="tarefa" id="tarefa" value="<?php echo $tarefa ['tarefa']?>"
+                             class="form-control" maxlength="20" required>
+                          </div>
+
+                          <div class="form-group">
                            <label for="descricao">Descrição</label>
-                           <input type="text" name="descricao" id="descricao" class="form-control"  maxlength="256" required>
-                           <label for="id_acao">Nome da ação</label>
-                           <input type="text" name="id_acao" id="id_acao" class="form-control"  maxlength="20" required>
-                           <label for="id_entidade">Nome da entidade</label>
-                           <input type="text" name="id_entidade" id="id_entidade" class="form-control"  maxlength="20" required>
-                           <label for="data">Data</label>
-                           <input type="date" name="datatarefa" id="datatarefa" class="form-control" required>
-                           <label for="hora">Hora</label>
-                           <input type="time" name="horatarefa" id="horatarefa" class="form-control" required>
-                         </div>
-                         <input type="submit" value="Confirmar" class="btn btn-primary">
+                           <textarea name="descricao" id="descricao" rows="3"
+                            class="form-control" max=256> <?php echo $tarefa ['descricao']?>
+                            </textarea>
+                          </div>
+
+                          <div class="form-group"> 
+                            <label for="acao">Ação</label>
+                            <select name="acao" id="acao" class="form-control">
+                              <?php foreach ($acoes as $acao){ 
+                                ?> 
+                                  <?php
+                                    if ($acao['id']==$tarefa['id_acao']){
+                                  ?>
+                                    <option value="<?php echo $acao['id']; ?>"><?php echo $acao
+                                    ['nome']; ?></option>
+                                  <?php
+                                    }else{
+                                  ?>
+                                  
+                                  <?php
+                                    }
+                                  ?>
+
+                                 
+                                <?php
+                                } ?>
+                                <option value=""></option>
+                            </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="entidade">Entidade</label>
+                            <select name="entidade" id="entidade" class="form-control">
+                             <?php foreach ($entidades as $entidade) { 
+                              ?> 
+                               <option valup="<?php echo $entidade['id'];?>"><?php echo
+                                $entidade['nome']; ?></option>
+                                <?php 
+                              } ?> 
+                              <option value=""></option> 
+                            </select> 
+                          </div>
+
+                          <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="Date" name="data" id="data" class="form-control">
+                          </div>
+
+                          <div class="form-group">
+                            <label for="hora">Hora</label>
+                            <input type="time" name="hora" id="hora" class="form-control">
+                          </div>
                         </form>
                     </div>
                 </div>

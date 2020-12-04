@@ -1,11 +1,18 @@
 <?php 
     include('../incs/config.php');
-    //ola
     $id = $_GET['id'];
     $stmt = $db->prepare("SELECT * FROM todo.tarefas WHERE id = :id");
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $tarefa = $stmt->fetch();
+
+    $stmt = $db->prepare("SELECT * FROM todo.acoes ORDER BY nome ASC");
+   $stmt->execute();
+   $acoes = $stmt->fetchAll(); 
+    
+   $stmt = $db->prepare("SELECT * FROM todo.entidades ORDER BY nome ASC");
+   $stmt->execute(); 
+   $entidades = $stmt->fetchAll();
 ?>
 <!doctype html>
 <html lang="pt">
@@ -21,7 +28,7 @@
   </head>
   <body>
     <?php include('../incs/nav.php');?>
-    <div class="container pt-4">
+    <div class="container ">
         <div class="row">
             <div class="col-8">
                 <div class="card">
@@ -38,8 +45,8 @@
 
                           <div class="form-group">
                            <label for="descricao">Descrição</label>
-                           <textarea name="descricao" id="descricao" rows="3"
-                            class="form-control" max=256> <?php echo $tarefa ['descricao']?>
+                           <textarea name="descricao" id="descricao"  rows="3"
+                           class="form-control" max=256><?php echo $tarefa ['descricao']?>
                             </textarea>
                           </div>
 
@@ -56,15 +63,14 @@
                                   <?php
                                     }else{
                                   ?>
-                                  
+                                  <option value="<?php echo $acao['id']; ?>"><?php echo $acao
+                                    ['nome']; ?></option>
                                   <?php
                                     }
                                   ?>
-
-                                 
                                 <?php
                                 } ?>
-                                <option value=""></option>
+                                
                             </select>
                           </div>
 
@@ -72,31 +78,41 @@
                             <label for="entidade">Entidade</label>
                             <select name="entidade" id="entidade" class="form-control">
                              <?php foreach ($entidades as $entidade) { 
-                              ?> 
-                               <option valup="<?php echo $entidade['id'];?>"><?php echo
-                                $entidade['nome']; ?></option>
-                                <?php 
-                              } ?> 
-                              <option value=""></option> 
+                                    if ($entidade['id']==$tarefa['id_acao']){
+                                  ?>
+                                    <option value="<?php echo $entidade['id']; ?>"><?php echo $entidade
+                                    ['nome']; ?></option>
+                                  <?php
+                                    }else{
+                                  ?>
+                                  <option value="<?php echo $entidade['id']; ?>"><?php echo $entidade
+                                    ['nome']; ?></option>
+                                  <?php
+                                    }
+                                  ?>
+
+                                <?php
+                                } ?>
                             </select> 
                           </div>
 
                           <div class="form-group">
                             <label for="data">Data</label>
-                            <input type="Date" name="data" id="data" class="form-control">
+                            <input type="Date" name="data" id="data" value="<?php echo $tarefa ['data']?>" class="form-control">
                           </div>
 
                           <div class="form-group">
                             <label for="hora">Hora</label>
-                            <input type="time" name="hora" id="hora" class="form-control">
+                            <input type="time" name="hora" id="hora" value="<?php echo $tarefa ['hora']?>" class="form-control">
                           </div>
+                          <input type="submit" value="Confirmar" class="btn btn-primary">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <?php include('../incs/footer.php');?>
+   
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

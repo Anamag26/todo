@@ -19,18 +19,30 @@
         $id = $_POST['id'];
         $tarefa = utf8_decode($_POST['tarefa']);
         $descricao = utf8_decode($_POST['descricao']);
-        $nome_acao = utf8_decode($_POST['nome_acao']);
-        $nome_entidade = utf8_decode($_POST['nome_entidade']);
-        $data = $_POST['data'];
+        $acao = $_POST['acao'];
+        $entidade = $_POST['entidade'];
+        if($_POST['data']==''){
+            $data = null;
+        }else{
+            $data= $_POST['data'];
+        }
         $hora = $_POST['hora'];
-        $stmt = $db->prepare("UPDATE todo.tarefas SET tarefa = :tarefa and descricao = :descricao and nome_acao = :nome_acao and nome_entidade = :nome_entidade and datatarefa = :datatarefa and horatarefa = :horatarefa WHERE id = :id");
+
+        $stmt = $db->prepare("UPDATE todo.tarefas SET
+                                tarefa = :tarefa,
+                                descricao = :descricao,
+                                id_acao = :acao,
+                                id_entidade = :entidade,
+                                data = :data,
+                                hora = :hora,
+                                WHERE id = :id");
         $stmt->bindParam(':tarefa', $tarefa);
-        $stmt->bindParam(':id', $id);
         $stmt->bindParam(':decricao', $descricao);
-        $stmt->bindParam(':nome_acao', $nome_acao);
-        $stmt->bindParam(':nome_entidade', $nome_entidade);
-        $stmt->bindParam(':datatarefa', $datatarefa);
-        $stmt->bindParam(':horatarefa', $horatarefa);
+        $stmt->bindParam(':acao', $acao);
+        $stmt->bindParam(':entidade', $entidade);
+        $stmt->bindParam(':data', $data);
+        $stmt->bindParam(':hora', $hora);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
     ?>
     <div class="container pt-4">
@@ -38,11 +50,11 @@
             <div class="col-8">
                 <div class="card">
                     <div class="card-header">
-                        Gestão de Tarefas | Editar
+                        Gestão de Tarefas | alterar
                     </div>
                     <div class="card-body">
                     <div class="alert alert-success" role="alert">
-                        Tarefa editada com sucesso!
+                        Tarefa alterada com sucesso!
                     </div>
                     <a href="tarefas_list.php" class="btn btn-primary">Lista de Tarefas</a>
                     </div>

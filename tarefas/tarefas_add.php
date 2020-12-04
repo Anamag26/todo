@@ -49,24 +49,23 @@
                               <?php foreach ($acoes as $acao){ 
                                 ?> 
                                   <option value="<?php echo $acao['id']; ?>"><?php echo $acao
-                                   ['nome']; ?>
+                                   ['nome'];?>
                                   </option>
                                 <?php
                                 } ?>
-                                <option value=""></option>
                             </select>
                           </div>
 
                           <div class="form-group">
                             <label for="entidade">Entidade</label>
+                            
                             <select name="entidade" id="entidade" class="form-control">
                              <?php foreach ($entidades as $entidade) { 
-                              ?> 
-                               <option valup="<?php echo $entidade['id'];?>"><?php echo
+                              ?>
+                               <option value="<?php echo $entidade['id'];?>"><?php echo
                                 $entidade['nome']; ?></option>
                                 <?php 
-                              } ?> 
-                              <option value=""></option> 
+                              } ?>  
                             </select> 
                           </div>
 

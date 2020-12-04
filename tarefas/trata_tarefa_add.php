@@ -21,7 +21,6 @@
         $descricao = utf8_decode($_POST['descricao']);
         $acao = $_POST['acao'];
         $entidade = $_POST['entidade'];
-        $data = $_POST['data'];
         if($_POST['data']==''){
             $data = null;
         }else{
@@ -30,8 +29,8 @@
         $hora = $_POST['hora'];
 
         //envia para a base de dados
-        $stmt =$db->prepare("INSERT INTO todo.tarefas (tarefa, descricao, id_acao, id_entidade,
-         data, hora) VALUES (:tarefa, :descricao, :acao, :entidade, :data, :hora)");
+        $stmt =$db->prepare("INSERT INTO todo.tarefas (tarefa, descricao, id_acao, id_entidade, 
+        data, hora) VALUES (:tarefa, :descricao, :acao, :entidade, :data, :hora)");
         $stmt->bindParam(':tarefa',$tarefa);
         $stmt->bindParam(':descricao',$descricao); 
         $stmt->bindParam(':acao',$acao);
@@ -52,7 +51,6 @@
                         Tarefa criada com sucesso!
                     </div>
                     <a href="tarefas_list.php" class="btn btn-primary">Lista de Tarefas</a>
-                    <a href="tarefas_add.php" class=" btn-primary">Criar Outra</a>
                     </div>
                 </div>
             </div>

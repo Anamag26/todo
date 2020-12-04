@@ -1,6 +1,6 @@
 <?php 
     include('../incs/config.php');
-
+    //ola
     $id = $_GET['id'];
     $stmt = $db->prepare("SELECT * FROM todo.tarefas WHERE id = :id");
     $stmt->bindParam(':id', $id);

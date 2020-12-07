@@ -24,17 +24,27 @@
   </head>
   <body>
     <?php include('../incs/nav.php');?>
-    <div class="container-fluid pt-4">
+    <div class="container pt-4">
+      <h1>
+        <p class="text-muted">
+        Tarefas
+        </p>
+      </h1>
+    </div> 
+    <div class="container pt-4">
         <div class="row">
-            <div class="col">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         Gestão de Tarefas | Lista
                     </div>
                     <div class="card-body">
-                        <a href="tarefas_add.php" class="btn btn-primary btn-lg">Criar nova</a>
-                        <h5 class="card-title">Lista das Tarefas</h5>
-                        <table class="table table-sm">
+                        <a href="tarefas_add.php" class="btn btn-primary btn-lg">Criar nova
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                            </svg></a>
+                        <div class="container-fluid pt-4">
+                        <table class="table table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -65,9 +75,22 @@
                                 </td>
                                 <td>
                                     <a href="tarefas_edit.php?id=<?php echo $tarefa
-                                    ['id']?>" class="btn btn-warning">Alterar</a>
+                                        ['id']?>" class="btn btn-warning">Alterar
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+                                        </svg>
+                                    </a>
+                                </td>
+                                <td>
                                     <a href="tarefas_del.php?id=<?php echo $tarefa
-                                    ['id']?>" class="btn btn-danger">Eliminar</a>
+                                        ['id']?>" class="btn btn-danger">Eliminar
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </a>
+                                </td>
+                                <td>
                                     <?php 
                                      if($tarefa['concluido']=='0'){
                                        
@@ -75,6 +98,11 @@
                                         <a href="tarefas_concluir.php?id=<?php echo $tarefa
                                         ['id']?>" class="btn btn-primary">concluir</a>
                                    <?php
+                                     }else{
+                                    ?>
+                                     <a href="tarefas_anular.php?id=<?php echo $tarefa
+                                        ['id']?>" class="btn btn-secondary">anular conclusão</a>
+                                    <?php
                                      }
                                     ?>
                                 </td>

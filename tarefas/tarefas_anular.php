@@ -1,4 +1,4 @@
-<?php 
+<?php
     include('../incs/config.php');
 ?>
 <!doctype html>
@@ -15,28 +15,29 @@
   </head>
   <body>
     <?php include('../incs/nav.php');?>
-    <div class="container pt-4">
-      <h1>
-        <p class="text-muted">
-        Ações
-        </p>
-      </h1>
-    </div> 
+    <?php 
+      
+
+        //envia para a base de dados
+        $stmt =$db->prepare("UPDATE todo.tarefas SET concluido = 0 WHERE id= :id");
+        $stmt->bindParam(':id',$_GET['id']);
+        $stmt->execute();
+
+        
+    ?>
     <div class="container pt-4">
         <div class="row">
             <div class="col-8">
                 <div class="card">
                     <div class="card-header">
-                        Gestão de Ações | Adicionar
+                        Gestão de Tarefas | conclusão
                     </div>
                     <div class="card-body">
-                        <form action="trata_acao_add.php" method="post">
-                         <div class="form-group">
-                           <label for="nome">Nome da ação</label>
-                           <input type="text" name="nome" id="nome" class="form-control"  maxlength="20" required>
-                         </div>
-                         <input type="submit" value="Confirmar" class="btn btn-primary">
-                        </form>
+                    <div class="alert alert-success" role="alert">
+                        Tarefa concluida com sucesso!
+                    </div>
+                    <a href="tarefas_list.php" class="btn btn-primary">Lista de Tarefas</a>
+                  
                     </div>
                 </div>
             </div>

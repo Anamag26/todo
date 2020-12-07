@@ -1,20 +1,16 @@
-<?php include('incs/config.php');
-$data= date('y-m-d');
-    $stmt = $db->prepare("SELECT a.id, a.tarefa, a.data, b.nome AS nomeacao, c.nome AS nomeentidade,
-     a.hora 
+<?php 
+    include('../incs/config.php');
+    $stmt = $db->prepare("SELECT a.id, a.tarefa, b.nome AS nomeacao, c.nome AS nomeentidade,
+     a.concluido
                             FROM todo.tarefas AS a
                             INNER JOIN todo.acoes AS b
                             ON a.id_acao = b.id
                             INNER JOIN todo.entidades as c
                             ON a.id_entidade = c.id
-                            WHERE a.data= :data");
-    $stmt->bindParam(':data',$data);
+                            WHERE a.concluido= 0");
     $stmt->execute();
     $tarefas = $stmt->fetchAll();
-
-
-    
-    ?>
+?>
 <!doctype html>
 <html lang="pt">
   <head>
@@ -28,34 +24,37 @@ $data= date('y-m-d');
     <title>ToDo App GPSI | v<?php echo $versao ?> </title>
   </head>
   <body>
-    <?php include('incs/nav.php');?>
+    <?php include('../incs/nav.php');?>
+
     <div class="container pt-4">
       <h1>
         <p class="text-muted">
-          Tarefas agendadas para hoje
+          Mapas
         </p>
       </h1>
     </div>
-
-    <div class="container  pt-4">
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        Gestão de Tarefas | Lista
-                    </div>
-                    <div class="card-body">
-                    <a href="/todo/tarefas/tarefas_list.php" class="btn btn-primary">Lista de Tarefas</a>
-                    <div class="card-body pt-4">    
-                        <table class="table table">
+    <div class="container pt-4">
+     <div class="row">
+      <div class="col-12">
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                     <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                     <b> Mapa com tarefas agendadas por realizar </b>
+                     </button>
+                    </h2>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                 <div class="card-body">
+                 <table class="table table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Tarefa</th>
                                 <th scope="col">Ação</th>
                                 <th scope="col">Entidade</th>
-                                <th scope="col">data</th>
-                                <th scope="col">hora</th>
+                                <th scope="col">Estado</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -68,8 +67,15 @@ $data= date('y-m-d');
                                 <td><?php echo $tarefa['tarefa']; ?></td>
                                 <td><?php echo $tarefa['nomeacao']; ?></td>
                                 <td><?php echo $tarefa['nomeentidade']; ?></td>
-                                <td><?php echo $tarefa['data']; ?></td>
-                                <td><?php echo $tarefa['hora']; ?></td>
+                                <td>
+                                    <?php 
+                                    if($tarefa['concluido']=='0'){
+                                        echo "Por Fazer";
+                                    }else{
+                                       echo "Feito";
+                                    }
+                                    ?>
+                                </td>
                                 
                             </tr>
                             <?php
@@ -77,50 +83,27 @@ $data= date('y-m-d');
                             ?>
                         </tbody>
                         </table>
-                    </div>
+                
                 </div>
             </div>
         </div>
-    </div>
-    <?php
-    $stmt = $db->prepare("SELECT a.id, a.tarefa, b.nome AS nomeacao, c.nome AS nomeentidade,
-     a.concluido
-                            FROM todo.tarefas AS a
-                            INNER JOIN todo.acoes AS b
-                            ON a.id_acao = b.id
-                            INNER JOIN todo.entidades as c
-                            ON a.id_entidade = c.id
-                            WHERE a.concluido= 1");
-    $stmt->execute();
-    $tarefas = $stmt->fetchAll();
-    ?>
-    <div class="container pt-4">
-      <h1>
-        <p class="text-muted">
-          Tarefas concluidas
-        </p>
-      </h1>
-    </div>
 
-    <div class="container  pt-4">
-        <div class="row">
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-header">
-                        Gestão de Tarefas | Lista
-                    </div>
-                    <div class="card-body">
-                    <a href="/todo/tarefas/tarefas_list.php" class="btn btn-primary">Lista de Tarefas</a>
-                    <div class="card-body pt-4">    
-                        <table class="table table">
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <b>Mapa de tarefas por Ação</b>
+                </button>
+            </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+            <table class="table table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                 <th scope="col">Ação</th>
                                 <th scope="col">Tarefa</th>
-                                <th scope="col">Ação</th>
-                                <th scope="col">Entidade</th>
-                                
-                              
+
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -129,29 +112,62 @@ $data= date('y-m-d');
                                 foreach($tarefas as $tarefa){
                             ?>
                             <tr>
-                                <th scope="row"><?php echo $tarefa['id']; ?></th>
-                                <td><?php echo $tarefa['tarefa']; ?></td>
                                 <td><?php echo $tarefa['nomeacao']; ?></td>
-                                <td><?php echo $tarefa['nomeentidade']; ?></td>
+                                <td><?php echo $tarefa['tarefa']; ?></td>
+        
                                 
-                              
                             </tr>
                             <?php
                                 }
                             ?>
                         </tbody>
                         </table>
-                    </div>
-                </div>
+              
+                            
+
+
+            </div>
             </div>
         </div>
-    </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <b> Mapa de tarefas por Entidade </b>
+                </button>
+            </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+            <table class="table table">
+            <thead>
+                            <tr> 
+                                <th scope="col">Entidade</th>                               
+                                <th scope="col">Tarefa</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                foreach($tarefas as $tarefa){
+                            ?>
+                            <tr>
+                                 <td><?php echo $tarefa['nomeentidade']; ?></td>
+                                <td><?php echo $tarefa['tarefa']; ?></td>
+                                
+                            </tr>
+                            <?php
+                                }
+                            ?>
+                        </tbody>
+                        </table>
+            </div>
+            </div>
+        </div>
+        </div>
+        
 
-
-
-   
-   
-    <?php include('incs/footer.php');?>
+    <?php include('../incs/footer.php');?>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

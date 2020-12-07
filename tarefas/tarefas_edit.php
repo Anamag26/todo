@@ -28,6 +28,13 @@
   </head>
   <body>
     <?php include('../incs/nav.php');?>
+    <div class="container pt-4">
+      <h1>
+        <p class="text-muted">
+        Tarefas
+        </p>
+      </h1>
+    </div> 
     <div class="container ">
         <div class="row">
             <div class="col-8">
@@ -37,6 +44,7 @@
                     </div>
                     <div class="card-body">
                         <form action="trata_tarefa_edit.php" method="post">
+                        <input type="hidden" name="id" value="<?php echo $id; ?>">
                           <div class="form-group">
                             <label for="tarefa">Tarefa</label>
                             <input type="text" name="tarefa" id="tarefa" value="<?php echo $tarefa ['tarefa']?>"
@@ -78,7 +86,7 @@
                             <label for="entidade">Entidade</label>
                             <select name="entidade" id="entidade" class="form-control">
                              <?php foreach ($entidades as $entidade) { 
-                                    if ($entidade['id']==$tarefa['id_acao']){
+                                    if ($entidade['id']==$tarefa['id_entidade']){
                                   ?>
                                     <option value="<?php echo $entidade['id']; ?>"><?php echo $entidade
                                     ['nome']; ?></option>

@@ -15,6 +15,7 @@
   </head>
   <body>
     <?php include('../incs/nav.php');?>
+    
     <?php 
       
 
